@@ -31,13 +31,13 @@ pip install -r requirements.txt
 
 **4. Install Ollama**
 
-Download from https://ollama/com and then run:
-ollama pull llama3.2
+    Download from https://ollama/com and then run:
+    ollama pull llama3.2
 
 **5. Add your API key**
 
-Create a .env file
-TAVILY_API_KEY=your_key_here
+    Create a .env file
+    TAVILY_API_KEY=your_key_here
 
 **6. Run**
 ```
