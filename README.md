@@ -14,7 +14,7 @@ detailed research reports automatically.
 
 **1. Clone the repo**
 ```
-git clone https://github.com/gagan7691/open-deep-research-agent.git
+git clone https://github.com/Gagan1977/open-deep-research-agent.git
 cd open-deep-research-agent
 ```
 
