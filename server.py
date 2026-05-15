@@ -21,7 +21,7 @@ async def homepage(request: Request):
     When the browser vistis localhost:8000
     serve the homepage (index.html)
     """
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="index.html")
 
 
 @app.get("/chat", response_class=HTMLResponse)
@@ -30,7 +30,7 @@ async def chatpage(request: Request):
     When the browser visits localhost:8000/chat
     serve the chat page (chat.html)
     """
-    return templates.TemplateResponse("chat.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="chat.html")
 
 
 class ResearchRequest(BaseModel):
