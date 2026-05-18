@@ -8,3 +8,5 @@ tiktoken==0.8.0
 fastapi==0.115.4
 uvicorn==0.32.0
 jinja2==3.1.4
+python-multipart==0.0.12
+markdown==3.7
