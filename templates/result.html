@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Deep Research</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="chat-page">
+
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <a href="/" class="sidebar-logo">OpenDeepResearch</a>
+            <button class="new-chat-btn">+ New chat</button>
+        </div>
+
+        <div class="sidebar-history">
+            <p class="history-label">Recents</p>
+            <ul id="history-list">
+                {% for item in history %}
+                <li title="{{ item }}">
+                    <a href="/chat?q={{ item }}">{{ item }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+
+    <main class="chat-main">
+
+        <div class="chat-topbar">
+            <span>Open Deep Research</span>
+        </div>
+
+        <div class="chat-messages">
+            <div class="message user">
+                <div class="message-content">{{ question }}</div>
+            </div>
+
+            <div class="message assistant">
+                <div class="message-content">{{ report | safe }}</div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <form action="/research" method="post" class="research-form">
+                <div class="input-box">
+                    <textarea
+                        name="question"
+                        placeholder="Ask another research question."
+                        rows="1"
+                    ></textarea>
+                    <button type="submit">Send</button>
+                </div>
+            </form>
+            <p class="input-hint">Press Enter to send · Shift + Enter for new line</p>
+        </div>
+
+    </main>
+
+</body>
+</html>
