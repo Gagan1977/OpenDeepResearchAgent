@@ -1,12 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
-from pydantic import BaseModel
-import asyncio
+from markdown import markdown
 
 from src.agent import run_research
+from src.report import save_report
+from src.history import load_history
 
 
 app = FastAPI()
@@ -33,32 +33,20 @@ async def chatpage(request: Request):
     return templates.TemplateResponse(request=request, name="chat.html")
 
 
-class ResearchRequest(BaseModel):
+@app.post("/research", response_class=HTMLResponse)
+async def research(request: Request, question: str = Form(...)):
     """
-    This defines what data we expect from the browser
-    when it send a research question.
-    """
-    question: str
-
-
-def stream_report(question: str):
-    """
-    Runs the research agent and yields the report
-    word by word so it streams in the browser.
+    Receives the question from the HTML form.
+    Runs the research agent.
+    Returns the result page with the report.
     """
     report = run_research(question)
-    words = report.split()
-    for word in words:
-        yield word + " "
-
-
-@app.post("/research")
-async def research(req: ResearchRequest):
-    """When the browser sends a research question:
-    1. Run the research agent
-    2. Stream the report back word by word
-    """
-    return StreamingResponse(
-        stream_report(req.question),
-        media_type="text/plain"
-    )
+    save_report(question, report)
+    
+    report_html = markdown(report)
+    history = load_history()
+    return templates.TemplateResponse(request=request, name="result.html", context={
+        "question": question,
+        "report": report_html,
+        "history": history
+    })
